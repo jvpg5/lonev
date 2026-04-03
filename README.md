@@ -104,22 +104,24 @@ nano .env   # configurar vault path e senha
 ### 3. Criar serviço systemd
 
 ```bash
-sudo cp deploy/obsidian-editor.service /etc/systemd/system/
+sudo cp deploy/lonev.service /etc/systemd/system/
 ```
 
-Edite o serviço se necessário (usuário, caminho do vault):
+Edite o serviço com os valores do seu ambiente (usuário, caminhos, vault):
 
 ```bash
-sudo nano /etc/systemd/system/obsidian-editor.service
+sudo nano /etc/systemd/system/lonev.service
 ```
+
+Os campos que precisam ser ajustados estão marcados com comentários no arquivo. Consulte a seção **Serviço systemd** abaixo para detalhes.
 
 Ative e inicie:
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable obsidian-editor
-sudo systemctl start obsidian-editor
-sudo systemctl status obsidian-editor
+sudo systemctl enable lonev
+sudo systemctl start lonev
+sudo systemctl status lonev
 ```
 
 ### 4. Firewall
@@ -176,7 +178,7 @@ lonev/
 │       ├── katex/                # KaTeX bundlado (sem CDN)
 │       └── marked/               # marked bundlado (sem CDN)
 ├── deploy/
-│   └── obsidian-editor.service   # Unidade systemd
+│   └── lonev.service              # Unidade systemd
 ├── .env.example
 ├── .gitignore
 └── package.json
@@ -244,6 +246,22 @@ curl -u jvpg:senha http://localhost:3000/api/health
 | Atalho | Ação |
 |--------|------|
 | `Ctrl+S` | Salvar imediatamente |
+
+---
+
+## Serviço systemd
+
+O arquivo `deploy/lonev.service` contém placeholders comentados para facilitar a configuração. Campos a editar:
+
+| Campo | O que colocar |
+|---|---|
+| `User` | Usuário do sistema com acesso ao projeto e ao vault |
+| `WorkingDirectory` | Caminho absoluto da pasta do projeto |
+| `ExecStart` | Confirme o caminho do node com `which node` |
+| `EnvironmentFile` | Caminho absoluto do `.env` (dentro da pasta do projeto) |
+| `ReadWritePaths` | Caminho absoluto do vault Obsidian |
+
+> O systemd **não expande `~`** — use sempre caminhos absolutos.
 
 ---
 

@@ -1,0 +1,37 @@
+[Unit]
+Description=LONEV — Lightweight Obsidian Notes Editor and Viewer
+After=network.target
+
+[Service]
+Type=simple
+
+# Usuário do sistema que irá executar o processo.
+# Deve ter permissão de leitura/escrita na pasta do projeto e no vault.
+# Exemplo: root, pi, jvpg
+User=SEU_USUARIO
+
+# Diretório raiz do projeto (onde está o package.json).
+# Use o caminho absoluto — o systemd não expande ~.
+# Exemplo: /root/lonev, /home/pi/lonev
+WorkingDirectory=/caminho/para/lonev
+
+# Caminho do executável do Node.js.
+# Confirme com: which node
+ExecStart=/usr/bin/node server/index.js
+
+# Arquivo .env com as variáveis de ambiente do servidor
+# (VAULT_PATH, PORT, AUTH_USERNAME, AUTH_PASSWORD).
+# Deve estar no mesmo diretório do projeto.
+EnvironmentFile=/caminho/para/lonev/.env
+
+# Reinicia automaticamente se o processo morrer com erro.
+Restart=on-failure
+RestartSec=10
+
+# Restrição de segurança: limita as pastas que o processo pode escrever.
+# Coloque aqui o caminho absoluto do vault Obsidian.
+# Exemplo: /mnt/hd/documento/Estudos, /home/pi/vault
+ReadWritePaths=/caminho/para/o/vault
+
+[Install]
+WantedBy=multi-user.target
