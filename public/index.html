@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LONEV — Obsidian Web Editor</title>
+
+  <!-- KaTeX — servido localmente, sem CDN -->
+  <link rel="stylesheet" href="/libs/katex/katex.min.css">
+  <script defer src="/libs/katex/katex.min.js"></script>
+  <script defer src="/libs/katex/auto-render.min.js"></script>
+
+  <!-- Marked — servido localmente -->
+  <script src="/libs/marked/marked.min.js"></script>
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar com navegação de arquivos -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>Vault</h2>
+        <button id="btn-new-file" title="Novo arquivo (.md)">+</button>
+      </div>
+      <div id="file-tree" class="file-tree">
+        <span class="loading">Carregando...</span>
+      </div>
+    </aside>
+
+    <!-- Área principal: editor + preview -->
+    <main class="main-content">
+      <div class="editor-header">
+        <span id="current-file" class="current-file">Nenhum arquivo aberto</span>
+        <div class="editor-actions">
+          <span id="save-status" class="save-status"></span>
+          <button id="btn-save" disabled>Salvar</button>
+          <button id="btn-toggle-preview">Preview</button>
+        </div>
+      </div>
+
+      <!-- Aviso de mudança externa (oculto por padrão) -->
+      <div id="external-change-banner" class="external-change-banner hidden">
+        Arquivo modificado externamente.
+        <button id="btn-reload-file">Recarregar</button>
+        <button id="btn-dismiss-banner">Ignorar</button>
+      </div>
+
+      <div class="editor-container">
+        <div class="editor-pane">
+          <textarea id="editor" placeholder="Abra um arquivo da sidebar para começar..."></textarea>
+        </div>
+
+        <div class="preview-pane" id="preview-pane">
+          <div id="preview" class="preview-content"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/fileTree.js"></script>
+  <script src="/js/preview.js"></script>
+  <script src="/js/editor.js"></script>
+</body>
+</html>

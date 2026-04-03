@@ -1,0 +1,17 @@
+[Unit]
+Description=LONEV — Lightweight Obsidian Notes Editor and Viewer
+After=network.target
+
+[Service]
+Type=simple
+User=jvpg
+WorkingDirectory=/home/jvpg/obsidian-web-editor
+ExecStart=/usr/bin/node server/index.js
+EnvironmentFile=/home/jvpg/obsidian-web-editor/.env
+Restart=on-failure
+RestartSec=10
+# Limita o processo apenas ao diretório do vault (segurança)
+ReadWritePaths=/home/jvpg/Documentos/Estudos
+
+[Install]
+WantedBy=multi-user.target
