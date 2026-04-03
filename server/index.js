@@ -8,6 +8,10 @@ const watcherService = require('./services/watcherService');
 
 const app = express();
 
+// Confia no proxy reverso mais próximo (Cloudflare Tunnel / cloudflared)
+// Necessário para express-rate-limit identificar IPs corretamente via X-Forwarded-For
+app.set('trust proxy', 1);
+
 // 1. Segurança (headers) — primeiro, sem exceções
 app.use(helmetMiddleware);
 
